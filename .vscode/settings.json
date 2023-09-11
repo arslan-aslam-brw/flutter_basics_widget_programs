@@ -1,0 +1,5 @@
+{
+    "emulator.androidColdBoot": true,
+    "emulator.emulatorPath": "C:\\Users\\ARSLAN\\AppData\\Local\\Android\\Sdk\\emulator",
+    "emulator.emulatorPathWindows": "C:\\Users\\ARSLAN\\AppData\\Local\\Android\\Sdk\\emulator"
+}
