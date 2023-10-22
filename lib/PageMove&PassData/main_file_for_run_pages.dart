@@ -38,7 +38,7 @@ class HomePage extends StatelessWidget {
   var userName;
   var userEmail;
 
-  HomePage(this.userName, this.userEmail);
+  HomePage(this.userName, this.userEmail, {super.key});
 
   @override
   Widget build(BuildContext context) {

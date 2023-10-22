@@ -128,7 +128,7 @@ class MyCalc extends State<MyHome> {
                 const SizedBox(
                   height: 50,
                 ),
-                Container(
+                SizedBox(
                   width: double.infinity,
                   height: 50,
                   child: ElevatedButton(

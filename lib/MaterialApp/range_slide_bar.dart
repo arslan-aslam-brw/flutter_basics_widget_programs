@@ -28,28 +28,64 @@ class _MyAppState extends State<MyApp> {
           centerTitle: true,
         ),
         body: Center(
-          child: RangeSlider(
-            values: values,
-            labels: labels,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              RangeSlider(
+                values: values,
+                labels: labels,
 
-            /// how much we want to give for one slide part, in division
-            divisions: 10,
+                /// how much we want to give for one slide part, in division
+                divisions: 10,
 
-            /// max values , if we want to give it our defined value
-            max: 10,
-            activeColor: Colors.green,
-            inactiveColor: Colors.green.shade100,
+                /// max values , if we want to give it our defined value
+                max: 10,
+                activeColor: Colors.green,
+                inactiveColor: Colors.green.shade100,
 
-            /// functionalty of slider, work wit this func
-            onChanged: (newValue) {
-              values = newValue;
-              print('$newValue');
+                /// functionalty of slider, work wit this func
+                onChanged: (newValue) {
+                  values = newValue;
+                  print('$newValue');
 
-              setState(() {});
-            },
+                  setState(() {});
+                },
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              const OneSideSlider(),
+            ],
           ),
         ),
       ),
     );
+  }
+}
+
+class OneSideSlider extends StatefulWidget {
+  const OneSideSlider({super.key});
+
+  @override
+  State<OneSideSlider> createState() => _OneSideSliderState();
+}
+
+class _OneSideSliderState extends State<OneSideSlider> {
+  double _values = 20;
+
+  @override
+  Widget build(BuildContext context) {
+    return Slider(
+        value: _values,
+        divisions: 20,
+        max: 20,
+        label: _values.toString(),
+        activeColor: Colors.green,
+        inactiveColor: Colors.green.shade100,
+        onChanged: (newValues) {
+          setState(() {
+            _values = newValues;
+          });
+        });
   }
 }
