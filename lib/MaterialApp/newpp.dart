@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
 
   String? validPhone(value) {
     if (value!.isEmpty) {
-      return "Email Is Required";
+      return "Phone Is Required";
     }
 
     if (value.lenght != 5) {
