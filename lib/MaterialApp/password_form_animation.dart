@@ -200,9 +200,13 @@ class _MyAppState extends State<MyApp> {
                     borderRadius: BorderRadius.circular(5)),
                 child: const Text('Create Password'),
                 onPressed: () {
-                  submitForm();
-                  _toastMessage("Password Changed", Colors.grey.shade600,
-                      ToastGravity.BOTTOM);
+                  if (isPassword8Char && hasMatchOneNum) {
+                    submitForm();
+                    _toastMessage(
+                        "Password Changed", Colors.green, ToastGravity.BOTTOM);
+                  } else {
+                    submitForm();
+                  }
                 },
               ),
             ],
