@@ -1,4 +1,5 @@
 import 'package:flutter/Material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +13,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey formKey = GlobalKey();
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   bool _isVisible = true;
 
   bool isPassword8Char = false;
   bool hasMatchOneNum = false;
+
+  void submitForm() {
+    if (formKey.currentState!.validate()) {}
+  }
 
   passwordMatch(String password) {
     final numericRegx = RegExp(r'[0-9]');
@@ -26,13 +31,21 @@ class _MyAppState extends State<MyApp> {
       isPassword8Char = false;
       if (password.length >= 8) {
         isPassword8Char = true;
-
-        hasMatchOneNum = false;
-        if (numericRegx.hasMatch(password)) {
-          hasMatchOneNum = true;
-        }
+      }
+      hasMatchOneNum = false;
+      if (numericRegx.hasMatch(password)) {
+        hasMatchOneNum = true;
       }
     });
+  }
+
+  _toastMessage(text, color, gravity) {
+    Fluttertoast.showToast(
+        msg: text,
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: color,
+        textColor: Colors.white,
+        gravity: gravity);
   }
 
   @override
@@ -69,44 +82,46 @@ class _MyAppState extends State<MyApp> {
               const SizedBox(
                 height: 30,
               ),
-              TextFormField(
-                // validator: (value) {
-                //   if (value!.isEmpty) {
-                //     return "Please Enter Password";
-                //   }
-                //   return null;
-                // },
+              Form(
                 key: formKey,
-                onChanged: (password) => passwordMatch(password),
-                obscureText: _isVisible,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: const TextStyle(color: Colors.black),
-                    contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                    suffixIcon: IconButton(
-                      splashRadius: 1,
-                      onPressed: () {
-                        setState(() {
-                          _isVisible = !_isVisible;
-                        });
-                      },
-                      icon: _isVisible
-                          ? const Icon(
-                              Icons.visibility_off,
-                              color: Colors.grey,
-                            )
-                          : const Icon(
-                              Icons.visibility,
-                              color: Colors.black,
-                            ),
-                    ),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(10))),
+                child: TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Please Enter Password";
+                    }
+                    return null;
+                  },
+                  onChanged: (password) => passwordMatch(password),
+                  obscureText: _isVisible,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                      labelText: 'Password',
+                      labelStyle: const TextStyle(color: Colors.black),
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 20),
+                      suffixIcon: IconButton(
+                        splashRadius: 1,
+                        onPressed: () {
+                          setState(() {
+                            _isVisible = !_isVisible;
+                          });
+                        },
+                        icon: _isVisible
+                            ? const Icon(
+                                Icons.visibility_off,
+                                color: Colors.grey,
+                              )
+                            : const Icon(
+                                Icons.visibility,
+                                color: Colors.black,
+                              ),
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.black),
+                          borderRadius: BorderRadius.circular(10))),
+                ),
               ),
               const SizedBox(
                 height: 30,
@@ -184,7 +199,11 @@ class _MyAppState extends State<MyApp> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5)),
                 child: const Text('Create Password'),
-                onPressed: () {},
+                onPressed: () {
+                  submitForm();
+                  _toastMessage("Password Changed", Colors.grey.shade600,
+                      ToastGravity.BOTTOM);
+                },
               ),
             ],
           ),
